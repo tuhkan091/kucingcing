@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Drink Order System</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      background:#f1f5f9;
+      padding:30px 15px;
+      color:#0f172a;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:auto;
+    }
+
+    .header{
+      text-align:center;
+      margin-bottom:30px;
+    }
+
+    .header h1{
+      font-size:38px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .header p{
+      color:#64748b;
+    }
+
+    .form-box{
+      background:white;
+      padding:25px;
+      border-radius:22px;
+      box-shadow:0 5px 20px rgba(0,0,0,0.05);
+      margin-bottom:30px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+      margin-bottom:15px;
+    }
+
+    input,
+    select,
+    textarea{
+      width:100%;
+      border:none;
+      outline:none;
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:14px;
+      padding:15px;
+      font-size:14px;
+    }
+
+    textarea{
+      resize:none;
+      min-height:100px;
+      margin-bottom:15px;
+    }
+
+    .submit-btn{
+      width:100%;
+      border:none;
+      padding:15px;
+      border-radius:14px;
+      background:#0f172a;
+      color:white;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .submit-btn:hover{
+      opacity:.9;
+    }
+
+    .title{
+      font-size:28px;
+      margin-bottom:20px;
+      font-weight:700;
+    }
+
+    .orders{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    .card{
+      background:white;
+      border-radius:20px;
+      padding:20px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.05);
+      border:1px solid #e2e8f0;
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .customer{
+      font-size:20px;
+      font-weight:600;
+    }
+
+    .time{
+      font-size:13px;
+      color:#64748b;
+    }
+
+    .status{
+      padding:8px 14px;
+      border-radius:12px;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .pending{
+      background:#fef3c7;
+      color:#92400e;
+    }
+
+    .info{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:14px;
+      margin-bottom:20px;
+    }
+
+    .box{
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .label{
+      font-size:12px;
+      color:#64748b;
+      margin-bottom:6px;
+      text-transform:uppercase;
+      font-weight:600;
+    }
+
+    .value{
+      font-size:15px;
+      font-weight:600;
+      line-height:1.6;
+      word-break:break-word;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:none;
+      padding:12px 16px;
+      border-radius:12px;
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      font-size:14px;
+    }
+
+    .print{
+      background:#2563eb;
+    }
+
+    .done{
+      background:#16a34a;
+    }
+
+    .delete{
+      background:#dc2626;
+    }
+
+    .empty{
+      background:white;
+      padding:40px;
+      border-radius:20px;
+      text-align:center;
+      color:#64748b;
+    }
+
+    @media(max-width:768px){
+
+      .grid{
+        grid-template-columns:1fr;
+      }
+
+      .info{
+        grid-template-columns:1fr;
+      }
+
+      .header h1{
+        font-size:30px;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>Daftar Pesanan Minuman</h1>
+      <p>Sistem pemesanan minuman sederhana modern</p>
+    </div>
+
+    <div class="form-box">
+
+      <form id="orderForm">
+
+        <div class="grid">
+
+          <input
+            type="text"
+            id="customer"
+            placeholder="Nama Pemesan"
+            required
+          >
+
+          <select id="drink" required>
+            <option value="">Pilih Minuman</option>
+            <option>☕ Kopi Susu</option>
+            <option>🧋 Boba Milk Tea</option>
+            <option>🍵 Matcha Latte</option>
+            <option>🥤 Lemon Tea</option>
+            <option>🍫 Chocolate Ice</option>
+          </select>
+
+        </div>
+
+        <textarea
+          id="notes"
+          placeholder="Tambahan pesanan..."
+        ></textarea>
+
+        <button class="submit-btn" type="submit">
+          Tambah Pesanan
+        </button>
+
+      </form>
+
+    </div>
+
+    <h2 class="title">Panel Pesanan</h2>
+
+    <div class="orders" id="orders"></div>
+
+  </div>
+
+  <script>
+
+    const form = document.getElementById('orderForm');
+    const ordersEl = document.getElementById('orders');
+
+    let orders =
+      JSON.parse(localStorage.getItem('drink-orders')) || [];
+
+    function saveData(){
+      localStorage.setItem(
+        'drink-orders',
+        JSON.stringify(orders)
+      );
+    }
+
+    function renderOrders(){
+
+      ordersEl.innerHTML = '';
+
+      if(orders.length === 0){
+
+        ordersEl.innerHTML = `
+          <div class="empty">
+            Belum ada pesanan.
+          </div>
+        `;
+
+        return;
+      }
+
+      [...orders].reverse().forEach((order,index)=>{
+
+        const realIndex =
+          orders.length - 1 - index;
+
+        const card =
+          document.createElement('div');
+
+        card.classList.add('card');
+
+        card.innerHTML = `
+
+          <div class="top">
+
+            <div>
+              <div class="customer">
+                ${order.customer}
+              </div>
+
+              <div class="time">
+                ${order.time}
+              </div>
+            </div>
+
+            <div class="status pending">
+              Sedang Diproses
+            </div>
+
+          </div>
+
+          <div class="info">
+
+            <div class="box">
+              <div class="label">
+                Minuman
+              </div>
+
+              <div class="value">
+                ${order.drink}
+              </div>
+            </div>
+
+            <div class="box">
+              <div class="label">
+                Catatan
+              </div>
+
+              <div class="value">
+                ${order.notes || '-'}
+              </div>
+            </div>
+
+            <div class="box">
+              <div class="label">
+                Nomor Order
+              </div>
+
+              <div class="value">
+                #${realIndex + 1}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="actions">
+
+            <button
+              class="btn print"
+              onclick="printReceipt(${realIndex})"
+            >
+              Cetak Struk
+            </button>
+
+            <button
+              class="btn done"
+              onclick="finishOrder(${realIndex})"
+            >
+              Pesanan Diterima
+            </button>
+
+          </div>
+
+        `;
+
+        ordersEl.appendChild(card);
+
+      });
+
+    }
+
+    form.addEventListener('submit',function(e){
+
+      e.preventDefault();
+
+      const newOrder = {
+
+        customer:
+          document.getElementById('customer').value,
+
+        drink:
+          document.getElementById('drink').value,
+
+        notes:
+          document.getElementById('notes').value,
+
+        time:
+          new Date().toLocaleString('id-ID')
+
+      };
+
+      orders.push(newOrder);
+
+      saveData();
+
+      renderOrders();
+
+      form.reset();
+
+    });
+
+    function finishOrder(index){
+
+      if(confirm('Pesanan sudah diterima?')){
+
+        orders.splice(index,1);
+
+        saveData();
+
+        renderOrders();
+
+      }
+
+    }
+
+    function printReceipt(index){
+
+      const order = orders[index];
+
+      const receipt = `
+================================
+        STRUK PESANAN
+================================
+
+Nama :
+${order.customer}
+
+Minuman :
+${order.drink}
+
+Catatan :
+${order.notes || '-'}
+
+Waktu :
+${order.time}
+
+================================
+      TERIMA KASIH
+================================
+      `;
+
+      const printWindow =
+        window.open('', '', 'width=400,height=600');
+
+      printWindow.document.write(`
+        <pre style="
+          font-family:monospace;
+          padding:20px;
+          font-size:15px;
+        ">
+${receipt}
+        </pre>
+      `);
+
+      printWindow.document.close();
+
+      printWindow.print();
+
+    }
+
+    renderOrders();
+
+  </script>
+
+</body>
+</html>
