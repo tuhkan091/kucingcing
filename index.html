@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drink Order Station</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+      padding: 40px 20px;
+      color: #1e293b;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .header h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .form-card {
+      background: rgba(255,255,255,0.35);
+      backdrop-filter: blur(16px);
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      margin-bottom: 35px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      border-radius: 18px;
+      padding: 16px 18px;
+      font-size: 15px;
+      background: rgba(255,255,255,0.75);
+      color: #1e293b;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: none;
+      margin-bottom: 18px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: none;
+      padding: 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+
+    .section-title {
+      font-size: 30px;
+      color: white;
+      margin-bottom: 22px;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    .orders {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+    }
+
+    .order-card {
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      animation: fadeIn 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .order-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, #ec4899, #8b5cf6, #06b6d4);
+    }
+
+    .customer-box,
+    .drink-box,
+    .notes-box {
+      background: rgba(255,255,255,0.65);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .value {
+      font-size: 17px;
+      font-weight: 600;
+      color: #0f172a;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .time {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .pending {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .done {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .btn {
+      border: none;
+      padding: 12px 16px;
+      border-radius: 14px;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .complete-btn {
+      background: #22c55e;
+    }
+
+    .edit-btn {
+      background: #3b82f6;
+    }
+
+    .delete-btn {
+      background: #ef4444;
+    }
+
+    .empty {
+      background: rgba(255,255,255,0.35);
+      padding: 40px;
+      border-radius: 28px;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header h1 {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>Drink Order Station</h1>
+      <p>Pesan minuman favoritmu dengan tampilan modern dan colorful ✨</p>
+    </div>
+
+    <div class="form-card">
+      <form id="orderForm">
+
+        <div class="grid">
+          <input type="text" id="customer" placeholder="Nama Pemesan" required>
+
+          <select id="drink" required>
+            <option value="">Pilih Minuman</option>
+            <option>🧋 Boba Milk Tea</option>
+            <option>☕ Kopi Susu</option>
+            <option>🍵 Matcha Latte</option>
+            <option>🍫 Chocolate Ice</option>
+            <option>🍓 Strawberry Milk</option>
+            <option>🥤 Lemon Tea</option>
+          </select>
+        </div>
+
+        <textarea id="notes" placeholder="Tambahan pesanan, contoh: less sugar, extra ice, tanpa topping..."></textarea>
+
+        <button type="submit" class="submit-btn">Tambah Pesanan</button>
+
+      </form>
+    </div>
+
+    <h2 class="section-title">Daftar Pesanan</h2>
+
+    <div class="orders" id="orders"></div>
+
+  </div>
+
+  <script>
+    const form = document.getElementById('orderForm');
+    const ordersContainer = document.getElementById('orders');
+
+    let orders = JSON.parse(localStorage.getItem('colorDrinkOrders')) || [];
+
+    function saveOrders() {
+      localStorage.setItem('colorDrinkOrders', JSON.stringify(orders));
+    }
+
+    function renderOrders() {
+      ordersContainer.innerHTML = '';
+
+      if (orders.length === 0) {
+        ordersContainer.innerHTML = `
+          <div class="empty">
+            Belum ada pesanan minuman ✨
+          </div>
+        `;
+        return;
+      }
+
+      [...orders].reverse().forEach((order, index) => {
+        const realIndex = orders.length - 1 - index;
+
+        const card = document.createElement('div');
+        card.classList.add('order-card');
+
+        card.innerHTML = `
+          <div class="status ${order.completed ? 'done' : 'pending'}">
+            ${order.completed ? 'Pesanan Sudah Diterima' : 'Pesanan Diproses'}
+          </div>
+
+          <div class="customer-box">
+            <div class="label">Nama Pemesan</div>
+            <div class="value">${order.customer}</div>
+          </div>
+
+          <div class="drink-box">
+            <div class="label">Minuman</div>
+            <div class="value">${order.drink}</div>
+          </div>
+
+          <div class="notes-box">
+            <div class="label">Tambahan Pesanan</div>
+            <div class="value">${order.notes || '-'}</div>
+          </div>
+
+          <div class="time">
+            ${order.time}
+          </div>
+
+          <div class="actions">
+            ${!order.completed ? `
+              <button class="btn complete-btn" onclick="completeOrder(${realIndex})">
+                Tandai Selesai
+              </button>
+            ` : `
+              <button class="btn edit-btn" onclick="editOrder(${realIndex})">
+                Ubah Pesanan
+              </button>
+            `}
+
+            <button class="btn delete-btn" onclick="deleteOrder(${realIndex})">
+              Hapus
+            </button>
+          </div>
+        `;
+
+        ordersContainer.appendChild(card);
+      });
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const newOrder = {
+        customer: document.getElementById('customer').value,
+        drink: document.getElementById('drink').value,
+        notes: document.getElementById('notes').value,
+        completed: false,
+        time: new Date().toLocaleString('id-ID')
+      };
+
+      orders.push(newOrder);
+      saveOrders();
+      renderOrders();
+      form.reset();
+    });
+
+    function completeOrder(index) {
+      orders[index].completed = true;
+      saveOrders();
+      renderOrders();
+    }
+
+    function editOrder(index) {
+      const newDrink = prompt('Ubah minuman:', orders[index].drink);
+
+      if (newDrink !== null && newDrink.trim() !== '') {
+        orders[index].drink = newDrink;
+
+        const newNotes = prompt('Ubah tambahan pesanan:', orders[index].notes);
+
+        if (newNotes !== null) {
+          orders[index].notes = newNotes;
+        }
+
+        saveOrders();
+        renderOrders();
+      }
+    }
+
+    function deleteOrder(index) {
+      if (confirm('Hapus pesanan ini?')) {
+        orders.splice(index, 1);
+        saveOrders();
+        renderOrders();
+      }
+    }
+
+    renderOrders();
+  </script>
+
+</body>
+</html>
