@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summer Cafe Order</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      background:
+      linear-gradient(180deg,#fff7ed,#fde68a);
+      min-height:100vh;
+      padding:30px 15px;
+      color:#7c2d12;
+    }
+
+    .container{
+      max-width:1150px;
+      margin:auto;
+    }
+
+    .header{
+      text-align:center;
+      margin-bottom:35px;
+    }
+
+    .header h1{
+      font-size:42px;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .header p{
+      color:#9a3412;
+      font-size:15px;
+    }
+
+    .form-box{
+      background:white;
+      border-radius:28px;
+      padding:28px;
+      box-shadow:0 8px 25px rgba(251,146,60,.15);
+      margin-bottom:35px;
+    }
+
+    .input-box{
+      margin-bottom:20px;
+    }
+
+    .input-box label{
+      display:block;
+      margin-bottom:10px;
+      font-weight:600;
+      font-size:15px;
+    }
+
+    input,
+    textarea{
+      width:100%;
+      border:none;
+      outline:none;
+      background:#fff7ed;
+      border:2px solid #fed7aa;
+      border-radius:16px;
+      padding:15px;
+      font-size:14px;
+      color:#7c2d12;
+    }
+
+    textarea{
+      min-height:100px;
+      resize:none;
+    }
+
+    .menu-grid{
+      display:grid;
+      grid-template-columns:
+      repeat(auto-fit,minmax(160px,1fr));
+      gap:16px;
+      margin-top:12px;
+    }
+
+    .menu-card{
+      background:#fff7ed;
+      border:2px solid #fed7aa;
+      border-radius:22px;
+      padding:20px;
+      text-align:center;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    .menu-card:hover{
+      transform:translateY(-4px);
+      background:#ffedd5;
+    }
+
+    .menu-card.active{
+      background:#fb923c;
+      color:white;
+      border-color:#fb923c;
+    }
+
+    .emoji{
+      font-size:45px;
+      margin-bottom:10px;
+    }
+
+    .menu-name{
+      font-weight:600;
+      font-size:15px;
+    }
+
+    .submit-btn{
+      width:100%;
+      border:none;
+      background:#fb923c;
+      color:white;
+      padding:16px;
+      border-radius:18px;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+      transition:.3s;
+      margin-top:10px;
+    }
+
+    .submit-btn:hover{
+      background:#f97316;
+    }
+
+    .title{
+      font-size:30px;
+      margin-bottom:20px;
+      font-weight:700;
+    }
+
+    .orders{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    .order-card{
+      background:white;
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 6px 18px rgba(251,146,60,.12);
+      border:2px solid #ffedd5;
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .customer{
+      font-size:20px;
+      font-weight:700;
+    }
+
+    .time{
+      font-size:13px;
+      color:#9a3412;
+    }
+
+    .status{
+      background:#fef3c7;
+      color:#92400e;
+      padding:9px 14px;
+      border-radius:12px;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .menu-title{
+      font-size:14px;
+      font-weight:700;
+      margin-bottom:12px;
+      color:#9a3412;
+    }
+
+    .menu-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .menu-item{
+      background:#fff7ed;
+      border:1px solid #fed7aa;
+      border-radius:16px;
+      padding:12px 14px;
+      min-width:160px;
+      flex:1;
+    }
+
+    .notes{
+      background:#fff7ed;
+      border-radius:18px;
+      padding:18px;
+      line-height:1.8;
+      color:#7c2d12;
+      margin-bottom:18px;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .btn{
+      border:none;
+      padding:12px 16px;
+      border-radius:14px;
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .print{
+      background:#0ea5e9;
+    }
+
+    .done{
+      background:#22c55e;
+    }
+
+    .cancel{
+      background:#ef4444;
+    }
+
+    .empty{
+      background:white;
+      padding:40px;
+      border-radius:24px;
+      text-align:center;
+      color:#9a3412;
+    }
+
+    @media(max-width:768px){
+
+      .header h1{
+        font-size:32px;
+      }
+
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>☀️ Summer Cafe Order</h1>
+      <p>Pesan minuman & dessert favoritmu ✨</p>
+    </div>
+
+    <div class="form-box">
+
+      <form id="orderForm">
+
+        <div class="input-box">
+
+          <label>Nama Pemesan</label>
+
+          <input
+            type="text"
+            id="customer"
+            placeholder="Masukkan nama..."
+            required
+          >
+
+        </div>
+
+        <!-- MINUMAN -->
+
+        <div class="input-box">
+
+          <label>Pilih Minuman</label>
+
+          <div class="menu-grid">
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🧋 Boba Milk Tea')">
+              <div class="emoji">🧋</div>
+              <div class="menu-name">Boba Milk Tea</div>
+            </div>
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🍓 Strawberry Milk')">
+              <div class="emoji">🍓</div>
+              <div class="menu-name">Strawberry Milk</div>
+            </div>
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🍋 Lemon Tea')">
+              <div class="emoji">🍋</div>
+              <div class="menu-name">Lemon Tea</div>
+            </div>
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'☕ Coffee Latte')">
+              <div class="emoji">☕</div>
+              <div class="menu-name">Coffee Latte</div>
+            </div>
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🍫 Chocolate Ice')">
+              <div class="emoji">🍫</div>
+              <div class="menu-name">Chocolate Ice</div>
+            </div>
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🍵 Matcha Latte')">
+              <div class="emoji">🍵</div>
+              <div class="menu-name">Matcha Latte</div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- DESSERT -->
+
+        <div class="input-box">
+
+          <label>Pilih Dessert</label>
+
+          <div class="menu-grid">
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🍰 Cheesecake')">
+              <div class="emoji">🍰</div>
+              <div class="menu-name">Cheesecake</div>
+            </div>
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🧁 Cupcake')">
+              <div class="emoji">🧁</div>
+              <div class="menu-name">Cupcake</div>
+            </div>
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🍪 Cookies')">
+              <div class="emoji">🍪</div>
+              <div class="menu-name">Cookies</div>
+            </div>
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🍨 Ice Cream')">
+              <div class="emoji">🍨</div>
+              <div class="menu-name">Ice Cream</div>
+            </div>
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🥞 Pancake')">
+              <div class="emoji">🥞</div>
+              <div class="menu-name">Pancake</div>
+            </div>
+
+            <div class="menu-card"
+            onclick="toggleMenu(this,'🍮 Pudding')">
+              <div class="emoji">🍮</div>
+              <div class="menu-name">Pudding</div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="input-box">
+
+          <label>Pesan Tambahan</label>
+
+          <textarea
+            id="notes"
+            placeholder="Contoh: extra ice, less sugar..."
+          ></textarea>
+
+        </div>
+
+        <button class="submit-btn" type="submit">
+          Tambah Pesanan
+        </button>
+
+      </form>
+
+    </div>
+
+    <h2 class="title">📋 Panel Pesanan</h2>
+
+    <div class="orders" id="orders"></div>
+
+  </div>
+
+  <script>
+
+    const form =
+    document.getElementById('orderForm');
+
+    const ordersEl =
+    document.getElementById('orders');
+
+    let selectedMenus = [];
+
+    let orders =
+    JSON.parse(localStorage.getItem('summer-orders'))
+    || [];
+
+    function toggleMenu(card,menu){
+
+      if(selectedMenus.includes(menu)){
+
+        selectedMenus =
+        selectedMenus.filter(item=>item!==menu);
+
+        card.classList.remove('active');
+
+      }else{
+
+        selectedMenus.push(menu);
+
+        card.classList.add('active');
+
+      }
+
+    }
+
+    function saveData(){
+
+      localStorage.setItem(
+      'summer-orders',
+      JSON.stringify(orders));
+
+    }
+
+    function renderOrders(){
+
+      ordersEl.innerHTML='';
+
+      if(orders.length===0){
+
+        ordersEl.innerHTML=`
+          <div class="empty">
+            Belum ada pesanan ☀️
+          </div>
+        `;
+
+        return;
+
+      }
+
+      [...orders].reverse().forEach((order,index)=>{
+
+        const realIndex =
+        orders.length-1-index;
+
+        const menuItems =
+        order.menus.map(menu=>`
+
+          <div class="menu-item">
+            ${menu}
+          </div>
+
+        `).join('');
+
+        const card =
+        document.createElement('div');
+
+        card.classList.add('order-card');
+
+        card.innerHTML=`
+
+          <div class="top">
+
+            <div>
+
+              <div class="customer">
+                ${order.customer}
+              </div>
+
+              <div class="time">
+                ${order.time}
+              </div>
+
+            </div>
+
+            <div class="status">
+              Sedang Diproses
+            </div>
+
+          </div>
+
+          <div class="menu-title">
+            Pesanan Menu
+          </div>
+
+          <div class="menu-list">
+
+            ${menuItems}
+
+          </div>
+
+          <div class="notes">
+
+            ${order.notes ||
+            'Tidak ada tambahan pesanan'}
+
+          </div>
+
+          <div class="actions">
+
+            <button
+            class="btn print"
+            onclick="printReceipt(${realIndex})">
+
+              Cetak Struk
+
+            </button>
+
+            <button
+            class="btn done"
+            onclick="finishOrder(${realIndex})">
+
+              Pesanan Diterima
+
+            </button>
+
+            <button
+            class="btn cancel"
+            onclick="cancelOrder(${realIndex})">
+
+              Cancel
+
+            </button>
+
+          </div>
+
+        `;
+
+        ordersEl.appendChild(card);
+
+      });
+
+    }
+
+    form.addEventListener('submit',function(e){
+
+      e.preventDefault();
+
+      if(selectedMenus.length===0){
+
+        alert('Pilih menu terlebih dahulu');
+
+        return;
+
+      }
+
+      const newOrder={
+
+        customer:
+        document.getElementById('customer').value,
+
+        menus:selectedMenus,
+
+        notes:
+        document.getElementById('notes').value,
+
+        time:
+        new Date().toLocaleString('id-ID')
+
+      };
+
+      orders.push(newOrder);
+
+      saveData();
+
+      renderOrders();
+
+      form.reset();
+
+      selectedMenus=[];
+
+      document.querySelectorAll('.menu-card')
+      .forEach(card=>
+      card.classList.remove('active'));
+
+    });
+
+    function finishOrder(index){
+
+      if(confirm('Pesanan sudah diterima?')){
+
+        orders.splice(index,1);
+
+        saveData();
+
+        renderOrders();
+
+      }
+
+    }
+
+    function cancelOrder(index){
+
+      if(confirm('Batalkan pesanan ini?')){
+
+        orders.splice(index,1);
+
+        saveData();
+
+        renderOrders();
+
+      }
+
+    }
+
+    function printReceipt(index){
+
+      const order = orders[index];
+
+      const menus =
+      order.menus.join('\\n');
+
+      const receipt = `
+================================
+
+        SUMMER CAFE
+
+================================
+
+Nama:
+${order.customer}
+
+Pesanan:
+${menus}
+
+Catatan:
+${order.notes || '-'}
+
+Waktu:
+${order.time}
+
+================================
+     TERIMA KASIH ☀️
+================================
+      `;
+
+      const printWindow =
+      window.open('', '', 'width=400,height=600');
+
+      printWindow.document.write(`
+        <pre style="
+          font-family:monospace;
+          padding:20px;
+          font-size:15px;
+        ">
+${receipt}
+        </pre>
+      `);
+
+      printWindow.document.close();
+
+      printWindow.print();
+
+    }
+
+    renderOrders();
+
+  </script>
+
+</body>
+</html>
